@@ -1,0 +1,13 @@
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(250),
+  phone BIGINT,
+  email VARCHAR(250) UNIQUE,
+  password VARCHAR(250)
+);
+
+
+ALTER TABLE users 
+ADD COLUMN refresh_token VARCHAR(255),
+ADD COLUMN access_token VARCHAR(255),
+ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
