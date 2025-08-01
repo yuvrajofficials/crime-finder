@@ -40,6 +40,18 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/admin", adminRouter);
 
+app.get("/test-token", (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+  const accessToken = req.headers.authorization?.split(" ")[1]; // Bearer <token>
+
+  return res.json({
+    message: "Token check",
+    refreshToken,
+    accessToken,
+  });
+});
+
+
 const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);

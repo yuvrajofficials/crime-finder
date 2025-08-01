@@ -1,22 +1,19 @@
 // kafkaProducer.js
-import { Kafka } from 'kafkajs';
+import { kafka } from './kafkaInstance.js';
 
-const kafka = new Kafka({
-  clientId: 'crime-producer',
-  brokers: ['localhost:9092'],
-});
 
 const producer = kafka.producer();
+await producer.connect();
 
 const sendToKafka = async (topic, data) => {
-  await producer.connect();
 
   await producer.send({
     topic,
     messages: [{ value: JSON.stringify(data) }],
   });
 
-  await producer.disconnect();
 };
+
+
 
 export default sendToKafka;

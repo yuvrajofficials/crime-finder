@@ -17,9 +17,9 @@ import { useTheme } from "../../context/ThemeContext";
 const BACKEND_URI = import.meta.env.VITE_BACKEND_URI;
 
 const COLORS = {
-  criminal: "#EF4444", // red
-  pending: "#8B5CF6", // violet
-  verified: "#10B981", // green
+  criminal: "#EF4444", 
+  pending: "#8B5CF6", 
+  verified: "#10B981", 
 };
 
 const DataGraph = () => {
@@ -29,7 +29,7 @@ const DataGraph = () => {
   const [dataList, setDataList] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch data from backend
+
   const fetchData = async () => {
     try {
       const res = await axiosInstance.get(`${BACKEND_URI}/api/v1/admin/get-all-suspects`);
@@ -45,13 +45,11 @@ const DataGraph = () => {
     fetchData();
   }, []);
 
-  // Aggregate data by status
   const statusCounts = dataList.reduce((acc, curr) => {
     acc[curr.status] = (acc[curr.status] || 0) + 1;
     return acc;
   }, {});
 
-  // Convert to chart format
   const chartData = Object.entries(statusCounts).map(([status, count]) => ({
     name: status,
     value: count,
@@ -67,7 +65,7 @@ const DataGraph = () => {
     >
       <h2 className="text-xl font-semibold mb-6 text-center">Status Distribution</h2>
 
-      {/* Pie Chart */}
+
       <div className="flex justify-center mb-10">
         <PieChart width={300} height={300}>
           <Pie
@@ -87,7 +85,7 @@ const DataGraph = () => {
         </PieChart>
       </div>
 
-      {/* Bar Chart */}
+
       <div className="flex justify-center">
         <BarChart width={400} height={300} data={chartData}>
           <CartesianGrid strokeDasharray="3 3" />

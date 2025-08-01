@@ -1,5 +1,6 @@
 import {chromium} from 'playwright'
 
+
 const scrapePersonDetailsByName = async (URI,NAME) => {
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage();

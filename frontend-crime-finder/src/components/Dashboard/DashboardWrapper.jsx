@@ -12,16 +12,15 @@ import {
   IoAnalytics,
 } from "react-icons/io5";
 import { useTheme } from "../../context/ThemeContext";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const navItems = [
   { icon: IoAnalytics, label: "Dashboard", path: "/dashboard" },
-  { icon: IoSettings, label: "Settings", path: "#settings" },
   { icon: IoNotifications, label: "Notifications", path: "/notifications" },
   { icon: IoLogOut, label: "Logout", path: "/logout" },
 ];
 
-const DashboardWrapper = ({ children }) => {
+const DashboardWrapper = ({activeItem, children }) => {
   const { theme, toggleTheme } = useTheme();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [user,setUser] = useState({});
@@ -46,13 +45,14 @@ useEffect(() => {
   }
 }, []);
 
+const location = useLocation();
+
 
   const isDark = theme === "dark";
 
   return (
     <div className={`flex min-h-screen font-sans ${isDark ? "bg-zinc-950 text-white" : "bg-gray-100 text-gray-800"}`}>
-      
-      {/* Overlay */}
+
       {isSidebarOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-40 z-40 md:hidden"
@@ -60,7 +60,7 @@ useEffect(() => {
         />
       )}
 
-      {/* Sidebar */}
+      
       <aside
         className={`min-h-screen fixed md:relative top-0 left-0 z-50 w-64 h-full transition-transform transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -68,17 +68,19 @@ useEffect(() => {
           isDark ? "bg-zinc-900 border-r border-zinc-800" : "bg-white border-r border-gray-200"
         }`}
       >
-        {/* Logo */}
+      
         <div className="p-6 border-b dark:border-gray-700 border-gray-200">
           <h2 className="text-2xl font-bold text-violet-600 dark:text-violet-400">
             CRIME<span className="text-gray-900 dark:text-gray-400"> FINDER</span>
           </h2>
         </div>
 
-        {/* Navigation */}
+
         <nav className="flex-1 p-6 space-y-2">
           {navItems.map((item, index) => {
-            const isActive = index === 0; // mock
+            const isActive = location.pathname.startsWith(item.path);
+
+
             return (
               <NavLink to={item.path}
                 key={item.label}
@@ -99,7 +101,7 @@ useEffect(() => {
           })}
         </nav>
 
-        {/* Profile */}
+
         <div className="p-6 border-t dark:border-gray-700 border-gray-200">
           <div className="flex items-center gap-3 font-semibold">
             <div className="w-10 h-10 flex items-center justify-center bg-violet-500 rounded-full text-white text-xl">
@@ -110,7 +112,6 @@ useEffect(() => {
         </div>
       </aside>
 
-      {/* Mobile menu icon */}
       <div className="md:hidden fixed top-5 right-20 ">
         <button
           onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -120,9 +121,9 @@ useEffect(() => {
         </button>
       </div>
 
-      {/* Main Content */}
+
       <div className="flex-1 flex flex-col">
-        {/* Header */}
+
         <header className={`w-full px-6 py-5 shadow ${isDark ? "bg-zinc-900 border-b border-zinc-700" : "bg-white border-b border-gray-200"}`}>
           <div className="flex justify-between items-center">
             <h1 className="text-xl md:text-2xl font-semibold">Dashboard</h1>
@@ -140,8 +141,7 @@ useEffect(() => {
           </div>
         </header>
 
-        {/* Page Content */}
-        {/* Page Content */}
+
 <main className="flex-1 overflow-y-auto max-h-[calc(100vh-80px)] p-6 md:p-8">
   {children}
 </main>

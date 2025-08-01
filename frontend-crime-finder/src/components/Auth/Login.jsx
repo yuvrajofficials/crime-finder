@@ -1,7 +1,7 @@
 // src/pages/Login.jsx
 
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axiosInstance";
 import AppLogo from "../../assets/app-logo.png";
 import { useTheme } from "../../context/ThemeContext";
@@ -17,6 +17,8 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { theme } = useTheme();
+
+  
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -60,7 +62,7 @@ const Login = () => {
       }`}
     >
       <div className="w-full max-w-6xl bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 transition-all duration-300">
-        {/* Left Branding */}
+
         <div className="bg-gradient-to-br from-indigo-600 to-purple-600 text-white flex flex-col justify-center items-center px-6 py-12 lg:py-0">
           <div className="w-full max-w-sm mx-auto flex flex-col items-center">
             <img
@@ -79,7 +81,7 @@ const Login = () => {
           </div>
         </div>
 
-        {/* Right Login Form */}
+
         <form
           onSubmit={handleSubmit}
           className={`w-full p-8 sm:p-10 md:p-12 flex flex-col justify-center space-y-6 ${
@@ -168,34 +170,7 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="remember-me"
-                  className={`ml-2 block text-sm                ${
-                    theme === "light" ?
-                     "text-gray-800" : "text-white"
-            }`}
-                >
-                  Remember me
-                </label>
-              </div>
-              <div className="text-sm">
-                <a
-                  href="/forgot-password"
-                  className="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300"
-                >
-                  Forgot password?
-                </a>
-              </div>
-            </div>
-          </div>
+           </div>
 
           <button
             type="submit"

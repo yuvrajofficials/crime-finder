@@ -49,7 +49,7 @@ const DataShowingTab = () => {
         isLight ? "bg-white text-gray-800" : "bg-zinc-900 text-gray-200"
       }`}
     >
-      {/* Header */}
+
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
         <h2 className="text-xl font-semibold text-center sm:text-left">
           Submitted Suspects
@@ -86,7 +86,7 @@ const DataShowingTab = () => {
         </div>
       </div>
 
-      {/* Content List */}
+
       <div className="flex-1 overflow-y-auto rounded-lg">
         {filteredData.length === 0 ? (
           <p className="text-center text-gray-500">No matching results.</p>

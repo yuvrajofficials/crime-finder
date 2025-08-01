@@ -45,4 +45,3 @@ export const sendAlertEmail = async (personName, status) => {
 };
 
 
-await sendAlertEmail("Abdul Iyer", "Criminal");

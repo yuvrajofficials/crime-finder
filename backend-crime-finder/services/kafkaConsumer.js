@@ -1,16 +1,17 @@
-import { Kafka } from 'kafkajs';
+
 import dotenv from "dotenv";
 import scrapePersonDetailsByName from '../utils/webScrapper.js';
 import pool from '../config/db.js';
 
 dotenv.config();
 
-const kafka = new Kafka({ clientId: 'crime-consumer', brokers: ['localhost:9092'] });
+import { kafka } from './kafkaInstance.js';
+
 const consumer = kafka.consumer({ groupId: 'scraper-group' });
 const producer = kafka.producer();
+const SCRAPING_WEBSITE_URI = process.env.SCRAPING_WEBSITE_URI;
 
 const run = async () => {
-  const SCRAPING_WEBSITE_URI = process.env.SCRAPING_WEBSITE_URI;
 
   await consumer.connect();
   await producer.connect();
@@ -29,7 +30,7 @@ const run = async () => {
           ?.split('\n')
           .find(line => line.toLowerCase().includes('criminal record'));
 
-        let status = 'verified'; // Default assumption: safe
+        let status = 'verified'; 
 
         if (criminalLine && criminalLine.toLowerCase().includes('yes')) {
           status = 'criminal';

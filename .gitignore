@@ -64,6 +64,7 @@ web_modules/
 
 .DS_Store
 
+*temp
 # Yarn Integrity file
 .yarn-integrity
 

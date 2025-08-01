@@ -78,7 +78,7 @@ const registerController = async (req, res, next) => {
 
     console.log(email, hashedPassword);
 
-    let data = await pool.query("INSERT INTO users( name, email, phone, password) values($1,$2,$3,$4)",[updatedName,email,phone,hashedPassword])
+    let data = await pool.query("INSERT INTO users( name, email, phone, password) values($1,$2,$3,$4) RETURNING email",[updatedName,email,phone,hashedPassword])
     
     console.log(data)
     res.status(200).json(APIResponse.success("Registration successful", { email }));

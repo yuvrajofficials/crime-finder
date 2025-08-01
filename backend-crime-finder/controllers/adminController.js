@@ -5,7 +5,7 @@ import APIResponse from "../utils/apiResponse.js";
 
 const insertDetailsIntoDB = async (req, res, next) => {
   const { name, description } = req.body;
-
+  
   try {
     if (!name) {
       throw new APIError("Name is required", 400);

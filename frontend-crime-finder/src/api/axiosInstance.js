@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem("crimeFinderAccessToken");
     if (token) config.headers["Authorization"] = `Bearer ${token}`;
     return config;
   },
@@ -27,7 +27,8 @@ axiosInstance.interceptors.response.use(
       try {
         const res = await axios.post(`${baseURL}/api/v1/auth/refresh`, {}, { withCredentials: true });
         const newAccessToken = res.data.accessToken;
-        localStorage.setItem("accessToken", newAccessToken);
+        localStorage.setItem("crimeFinderAccessToken", newAccessToken);
+        console.log(newAccessToken)
         originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
         return axios(originalRequest);
       } catch (error) {

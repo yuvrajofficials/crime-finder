@@ -3,7 +3,8 @@ import dotenv from 'dotenv';
 import { sendAlertEmail } from '../utils/emailNotifier.js';
 dotenv.config();
 
-const kafka = new Kafka({ clientId: 'email-consumer', brokers: ['localhost:9092'] });
+import { kafka } from './kafkaInstance.js';
+
 const consumer = kafka.consumer({ groupId: 'email-group' });
 
 const run = async () => {
@@ -17,6 +18,7 @@ const run = async () => {
         console.log("📩 Email Triggered For:", data.name);
 
         await sendAlertEmail(data.name, "Criminal Record Detected");
+        return
       } catch (error) {
         console.error("❌ Error sending email:", error.message);
       }
